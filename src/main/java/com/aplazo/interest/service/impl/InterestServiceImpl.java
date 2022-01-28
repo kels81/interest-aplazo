@@ -37,9 +37,9 @@ public class InterestServiceImpl implements InterestService {
     public InterestsResponse create(PurchaseRequest request) {
 
         Purchase purchase = new Purchase();
-        purchase.setAmount(request.getAmount());        //cantidad solicitada
-        purchase.setRate(request.getRate());            //interes a cobrar
-        purchase.setTerms(request.getTerms());          //numero de plazos a pagar
+        purchase.setAmount(request.getAmount());
+        purchase.setRate(request.getRate());
+        purchase.setTerms(request.getTerms());
 
         purchaseRepository.save(purchase);
 
@@ -51,12 +51,6 @@ public class InterestServiceImpl implements InterestService {
         var interest = (purchase.getAmount() * purchase.getRate() * purchase.getTerms()) / 100;
         var totalWithInterest = purchase.getAmount() + interest;
         var paymentTerms = totalWithInterest / purchase.getTerms();
-
-        log.info("Prestamo:: " + purchase.getAmount());
-        log.info("Intereses:: " + interest);
-        log.info("Total con intereses:: " + totalWithInterest);
-        log.info("Plazo:: " + purchase.getTerms() + " semanas");
-        log.info("Pago por semana:: " + paymentTerms);
 
         Collection<Payment> lstPayment = new ArrayList<>();
 
